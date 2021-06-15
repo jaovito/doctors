@@ -4,5 +4,5 @@ export class CreateDoctorDto {
   telephone: number;
   celphone: number;
   cep: number;
-  medical_specialty: string;
+  specialty_id: string;
 }
