@@ -1,39 +1,24 @@
+import { Doctor } from 'src/doctors/entities/doctor.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { Specialty } from 'src/specialties/entities/specialty.entity';
 
-@Entity('doctors')
-export class Doctor {
+@Entity('doctor_specialties')
+export class Specialty {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid')
-  specialty_id: string;
-
-  @ManyToMany(() => Specialty, (specialty) => specialty.doctor)
-  specialties: Specialty[];
+  @ManyToMany(() => Doctor, (doctor) => doctor.specialties)
+  doctor: Doctor[];
 
   @Column()
   name: string;
-
-  @Column()
-  CRM: number;
-
-  @Column()
-  telephone: number;
-
-  @Column()
-  celphone: number;
-
-  @Column()
-  cep: number;
 
   @CreateDateColumn()
   created_at: Date;

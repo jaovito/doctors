@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateDoctor1623777696289 implements MigrationInterface {
+export class CreateDoctors1623804196256 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -8,7 +8,7 @@ export class CreateDoctor1623777696289 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true,
             generationStrategy: 'uuid',
           },
@@ -18,36 +18,55 @@ export class CreateDoctor1623777696289 implements MigrationInterface {
             length: '120',
           },
           {
-            name: 'CRM',
+            name: 'crm',
             type: 'int',
             width: 7,
           },
           {
             name: 'telephone',
-            type: 'number',
+            type: 'int',
           },
           {
             name: 'celphone',
-            type: 'number',
+            type: 'int',
           },
           {
             name: 'cep',
-            type: 'number',
+            type: 'int',
           },
           {
             name: 'specialty_id',
-            type: 'uuid',
+            type: 'varchar',
+            isNullable: true,
+            generationStrategy: 'uuid',
+          },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
           },
         ],
 
         foreignKeys: [
           {
             name: 'DoctorSpeciality',
+            referencedTableName: 'doctor_specialties',
+            referencedColumnNames: ['id'],
+            columnNames: ['specialty_id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
           },
         ],
       }),
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('doctors');
+  }
 }

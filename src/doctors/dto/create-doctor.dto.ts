@@ -1,6 +1,6 @@
 export class CreateDoctorDto {
   name: string;
-  CRM: number;
+  crm: number;
   telephone: number;
   celphone: number;
   cep: number;

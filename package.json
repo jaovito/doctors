@@ -32,7 +32,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "ts-node-dev": "^1.1.6",
-    "typeorm": "^0.2.34"
+    "typeorm": "^0.2.34",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",
@@ -42,6 +43,7 @@
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.36",
     "@types/supertest": "^2.0.10",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",

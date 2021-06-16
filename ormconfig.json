@@ -3,12 +3,11 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "root",
+    "password": "docker",
     "database": "doctors",
-    "entities": ["./src/**/*.entity.ts"],
-    "migrationsTableName": "custom_migration_table",
-    "migrations": ["./src/database/migrations/*.ts"],
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "migrations": ["./dist/database/migrations/*.js"],
     "cli": {
-        "migrationsDir": "./src/database/migrations"
+        "migrationsDir": "./dist/database/migrations"
     }
 }
