@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "docker",
+  "database": "doctors",
+  "entities": ["dist/**/*.entity.js"],
+  "migrations": ["./dist/database/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "./dist/database/migrations"
+  }
+}
