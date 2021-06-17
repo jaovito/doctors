@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-@Entity('specialties')
+@Entity('specialty')
 export class Specialty {
   @PrimaryGeneratedColumn('uuid')
   id: string;

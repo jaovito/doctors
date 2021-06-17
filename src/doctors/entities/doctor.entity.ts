@@ -10,7 +10,7 @@ import {
 import { v4 as uuid } from 'uuid';
 import { Specialty } from 'src/specialties/entities/specialty.entity';
 
-@Entity('doctors')
+@Entity('doctor')
 export class Doctor {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -33,6 +33,9 @@ export class Doctor {
 
   @Column()
   cep: number;
+
+  @Column('boolean', { default: false })
+  isDeleted: boolean;
 
   @CreateDateColumn()
   created_at: Date;
