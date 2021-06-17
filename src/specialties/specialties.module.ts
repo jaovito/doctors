@@ -3,12 +3,12 @@ import { SpecialtiesService } from './specialties.service';
 import { SpecialtiesController } from './specialties.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Specialty } from './entities/specialty.entity';
+import { Doctor } from 'src/doctors/entities/doctor.entity';
+import { DoctorsSpecialty } from 'src/doctors-specialties/entities/doctors-specialty.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Specialty])],
+  imports: [TypeOrmModule.forFeature([Specialty, Doctor, DoctorsSpecialty])],
   controllers: [SpecialtiesController],
   providers: [SpecialtiesService],
 })
-export class SpecialtiesModule {
-  constructor(private specialtiesService: SpecialtiesService) {}
-}
+export class SpecialtiesModule {}

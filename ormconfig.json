@@ -6,8 +6,8 @@
     "password": "root",
     "database": "doctors",
     "entities": ["dist/**/*.entity{.ts,.js}"],
-    "migrations": ["./src/database/migrations/*.js"],
+    "migrations": ["./dist/database/migrations/*{.ts,.js}"],
     "cli": {
-      "migrationsDir": "./src/database/migrations"
+      "migrationsDir": "./dist/database/migrations"
     }
 }

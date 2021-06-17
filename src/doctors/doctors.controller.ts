@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { Specialty } from 'src/specialties/entities/specialty.entity';
 
 import { DoctorsService } from './doctors.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
@@ -17,7 +18,10 @@ export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
   @Post()
-  create(@Body() createDoctorDto: CreateDoctorDto) {
+  create(
+    @Body() createDoctorDto: CreateDoctorDto,
+    @Body() specialties: Specialty[],
+  ) {
     return this.doctorsService.create(createDoctorDto);
   }
 

@@ -1,3 +1,4 @@
+import { DoctorsSpecialty } from 'src/doctors-specialties/entities/doctors-specialty.entity';
 import { Doctor } from 'src/doctors/entities/doctor.entity';
 import {
   Entity,
@@ -6,16 +7,25 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-@Entity('doctor_specialties')
+@Entity('specialties')
 export class Specialty {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToMany(() => Doctor, (doctor) => doctor.specialties)
-  doctor: Doctor[];
+  @JoinColumn()
+  specialties: Doctor[];
+
+  @OneToMany(
+    () => DoctorsSpecialty,
+    (doctorsSpecialty) => doctorsSpecialty.doctor,
+  )
+  public doctorsSpecialty!: DoctorsSpecialty[];
 
   @Column()
   name: string;

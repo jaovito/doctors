@@ -29,16 +29,11 @@ export class CreateDoctors1623804196256 implements MigrationInterface {
           {
             name: 'celphone',
             type: 'numeric',
+            width: 11,
           },
           {
             name: 'cep',
             type: 'int',
-          },
-          {
-            name: 'specialty_id',
-            type: 'varchar',
-            isNullable: true,
-            generationStrategy: 'uuid',
           },
           {
             name: 'created_at',
@@ -49,17 +44,6 @@ export class CreateDoctors1623804196256 implements MigrationInterface {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
-          },
-        ],
-
-        foreignKeys: [
-          {
-            name: 'DoctorSpeciality',
-            referencedTableName: 'doctor_specialties',
-            referencedColumnNames: ['id'],
-            columnNames: ['specialty_id'],
-            onUpdate: 'CASCADE',
-            onDelete: 'CASCADE',
           },
         ],
       }),

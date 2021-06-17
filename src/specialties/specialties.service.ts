@@ -12,10 +12,10 @@ export class SpecialtiesService {
     private specialtyRepository: Repository<Specialty>,
   ) {}
 
-  async create(createSpecialtyDto: CreateSpecialtyDto) {
-    const doctor = this.specialtyRepository.create(createSpecialtyDto);
-    await this.specialtyRepository.save(doctor);
-    return doctor;
+  async create(createSpecialtyDto: CreateSpecialtyDto): Promise<Specialty> {
+    const specialty = this.specialtyRepository.create(createSpecialtyDto);
+    await this.specialtyRepository.save(specialty);
+    return specialty;
   }
 
   findAll(): Promise<Specialty[]> {
