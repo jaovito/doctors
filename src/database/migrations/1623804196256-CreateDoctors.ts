@@ -24,11 +24,11 @@ export class CreateDoctors1623804196256 implements MigrationInterface {
           },
           {
             name: 'telephone',
-            type: 'int',
+            type: 'numeric',
           },
           {
             name: 'celphone',
-            type: 'int',
+            type: 'numeric',
           },
           {
             name: 'cep',

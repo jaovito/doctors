@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { response } from 'express';
 import { Repository } from 'typeorm';
 import { CreateSpecialtyDto } from './dto/create-specialty.dto';
 import { UpdateSpecialtyDto } from './dto/update-specialty.dto';

@@ -24,7 +24,7 @@ export class Doctor {
   name: string;
 
   @Column()
-  CRM: number;
+  crm: number;
 
   @Column()
   telephone: number;

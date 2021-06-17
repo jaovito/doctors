@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+
 import { DoctorsService } from './doctors.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
@@ -32,7 +33,7 @@ export class DoctorsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
-    return 'hello';
+    return this.doctorsService.update(id, updateDoctorDto);
   }
 
   @Delete(':id')
