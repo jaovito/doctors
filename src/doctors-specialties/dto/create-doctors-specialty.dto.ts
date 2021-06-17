@@ -1,4 +1,4 @@
 export class CreateDoctorsSpecialtyDto {
   doctorId: string;
-  specialtiesId: string;
+  specialtyId: string;
 }

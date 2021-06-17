@@ -15,6 +15,11 @@ export class CreateDoctorSpecialties1623804156883
             generationStrategy: 'uuid',
           },
           {
+            name: 'specialtiesId',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'name',
             type: 'varchar',
           },

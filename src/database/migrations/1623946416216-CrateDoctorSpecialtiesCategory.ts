@@ -9,30 +9,16 @@ export class CrateDoctorSpecialtiesCategory1623946416216
         name: 'doctors_specialties_specialties',
         columns: [
           {
-            name: 'id',
+            name: 'doctorId',
             type: 'varchar',
             isPrimary: true,
             generationStrategy: 'uuid',
           },
           {
-            name: 'doctorId',
+            name: 'specialtyId',
             type: 'varchar',
+            isPrimary: true,
             generationStrategy: 'uuid',
-          },
-          {
-            name: 'specialtiesId',
-            type: 'varchar',
-            generationStrategy: 'uuid',
-          },
-          {
-            name: 'created_at',
-            type: 'timestamp',
-            default: 'now()',
-          },
-          {
-            name: 'updated_at',
-            type: 'timestamp',
-            default: 'now()',
           },
         ],
 
@@ -49,7 +35,7 @@ export class CrateDoctorSpecialtiesCategory1623946416216
             name: 'FKSpecialty',
             referencedTableName: 'specialties',
             referencedColumnNames: ['id'],
-            columnNames: ['specialtiesId'],
+            columnNames: ['specialtyId'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
