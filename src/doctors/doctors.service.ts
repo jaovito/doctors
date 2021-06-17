@@ -21,11 +21,14 @@ export class DoctorsService {
   }
 
   findAll(): Promise<Doctor[]> {
-    return this.doctorsRepository.find({ relations: ['specialties'] });
+    return this.doctorsRepository.find({
+      where: { isDeleted: false },
+      relations: ['specialties'],
+    });
   }
 
   findOne(id: string): Promise<Doctor> {
-    return this.doctorsRepository.findOne(id);
+    return this.doctorsRepository.findOne(id, { relations: ['specialties'] });
   }
 
   async update(id: string, updateDoctorDto: UpdateDoctorDto): Promise<Doctor> {
@@ -37,6 +40,9 @@ export class DoctorsService {
   }
 
   async remove(id: string): Promise<void> {
-    await this.doctorsRepository.delete(id);
+    const doctor = await this.findOne(id);
+
+    doctor.isDeleted = true;
+    await this.doctorsRepository.save(doctor);
   }
 }
