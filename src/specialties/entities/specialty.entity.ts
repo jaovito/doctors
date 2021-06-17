@@ -1,14 +1,9 @@
-import { DoctorsSpecialty } from 'src/doctors-specialties/entities/doctors-specialty.entity';
-import { Doctor } from 'src/doctors/entities/doctor.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinColumn,
-  OneToMany,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
