@@ -6,7 +6,7 @@ export class CrateDoctorSpecialtiesCategory1623946416216
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'doctors_specialties_specialties',
+        name: 'doctor_specialties_specialty',
         columns: [
           {
             name: 'doctorId',
@@ -25,7 +25,7 @@ export class CrateDoctorSpecialtiesCategory1623946416216
         foreignKeys: [
           {
             name: 'FKDoctor',
-            referencedTableName: 'doctors',
+            referencedTableName: 'doctor',
             referencedColumnNames: ['id'],
             columnNames: ['doctorId'],
             onDelete: 'CASCADE',
@@ -33,7 +33,7 @@ export class CrateDoctorSpecialtiesCategory1623946416216
           },
           {
             name: 'FKSpecialty',
-            referencedTableName: 'specialties',
+            referencedTableName: 'specialty',
             referencedColumnNames: ['id'],
             columnNames: ['specialtyId'],
             onDelete: 'CASCADE',
@@ -45,6 +45,6 @@ export class CrateDoctorSpecialtiesCategory1623946416216
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('doctors_specialties_specialties');
+    await queryRunner.dropTable('doctor_specialties_specialty');
   }
 }
