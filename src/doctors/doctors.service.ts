@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreateDoctorDto } from './dto/create-doctor.dto';
+import { SearchDoctorDto } from './dto/search-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
 import { Doctor } from './entities/doctor.entity';
@@ -17,6 +18,18 @@ export class DoctorsService {
   async create(createDoctorDto: CreateDoctorDto) {
     const doctor = this.doctorsRepository.create(createDoctorDto);
     await this.doctorsRepository.save(doctor);
+    return doctor;
+  }
+
+  async search(searchDoctorDto: SearchDoctorDto) {
+    const doctor = await this.doctorsRepository.findOne({
+      where: searchDoctorDto,
+    });
+
+    if (!doctor) {
+      throw new HttpException('Doctor does not exists', 400);
+    }
+
     return doctor;
   }
 
