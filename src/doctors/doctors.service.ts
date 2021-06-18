@@ -1,7 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as yup from 'yup';
 
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { SearchDoctorDto } from './dto/search-doctor.dto';
@@ -17,26 +16,6 @@ export class DoctorsService {
   ) {}
 
   async create(createDoctorDto: CreateDoctorDto) {
-    const schema = yup.object().shape({
-      name: yup.string().required(),
-      crm: yup.number().required(),
-      telephone: yup.number().required(),
-      celphone: yup.number().required(),
-      cep: yup.number().required(),
-    });
-
-    try {
-      await schema.validate(createDoctorDto);
-    } catch (err) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          errors: err.errors,
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     const doctor = this.doctorsRepository.create(createDoctorDto);
     await this.doctorsRepository.save(doctor);
     return doctor;

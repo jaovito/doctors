@@ -7,7 +7,10 @@ import {
   Param,
   Delete,
   Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
+import * as yup from 'yup';
 
 import { DoctorsService } from './doctors.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
@@ -19,7 +22,29 @@ export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
   @Post()
-  create(@Body() createDoctorDto: CreateDoctorDto) {
+  async create(@Body() createDoctorDto: CreateDoctorDto) {
+    // definindo schema de validação para o cadastro de médicos
+    const schema = yup.object().shape({
+      name: yup.string().required(),
+      crm: yup.number().required(),
+      telephone: yup.number().required(),
+      celphone: yup.number().required(),
+      cep: yup.number().required(),
+    });
+
+    // validação de dados do doutor
+    try {
+      await schema.validate(createDoctorDto);
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.doctorsService.create(createDoctorDto);
   }
 
@@ -29,7 +54,27 @@ export class DoctorsController {
   }
 
   @Get('search')
-  search(@Query() searchDoctorDto: SearchDoctorDto) {
+  async search(@Query() searchDoctorDto: SearchDoctorDto) {
+    const schema = yup.object().shape({
+      name: yup.string(),
+      crm: yup.number(),
+      telephone: yup.number(),
+      celphone: yup.number(),
+      cep: yup.number(),
+    });
+
+    try {
+      await schema.validate(searchDoctorDto);
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.doctorsService.search(searchDoctorDto);
   }
 
