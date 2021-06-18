@@ -6,7 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
+import * as yup from 'yup';
+
 import { SpecialtiesService } from './specialties.service';
 import { CreateSpecialtyDto } from './dto/create-specialty.dto';
 import { UpdateSpecialtyDto } from './dto/update-specialty.dto';
@@ -16,7 +20,23 @@ export class SpecialtiesController {
   constructor(private readonly specialtiesService: SpecialtiesService) {}
 
   @Post()
-  create(@Body() createSpecialtyDto: CreateSpecialtyDto) {
+  async create(@Body() createSpecialtyDto: CreateSpecialtyDto) {
+    const schema = yup.object().shape({
+      name: yup.string().required(),
+    });
+
+    try {
+      await schema.validate(createSpecialtyDto);
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.specialtiesService.create(createSpecialtyDto);
   }
 

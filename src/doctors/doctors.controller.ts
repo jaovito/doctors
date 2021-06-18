@@ -25,10 +25,31 @@ export class DoctorsController {
   async create(@Body() createDoctorDto: CreateDoctorDto) {
     // definindo schema de validação para o cadastro de médicos
     const schema = yup.object().shape({
-      name: yup.string().required(),
-      crm: yup.number().required(),
-      telephone: yup.number().required(),
-      celphone: yup.number().required(),
+      name: yup.string().max(120).required(),
+      crm: yup
+        .number()
+        .test(
+          'len',
+          'CRM field must have exactly 6 digits',
+          (number) => String(number).length >= 6,
+        )
+        .required(),
+      telephone: yup
+        .number()
+        .test(
+          'len',
+          'Telephone field must have exactly 8 digits',
+          (number) => String(number).length >= 8,
+        )
+        .required(),
+      celphone: yup
+        .number()
+        .test(
+          'len',
+          'Celphone field must have exactly 9 digits',
+          (number) => String(number).length >= 9,
+        )
+        .required(),
       cep: yup.number().required(),
     });
 
@@ -56,7 +77,7 @@ export class DoctorsController {
   @Get('search')
   async search(@Query() searchDoctorDto: SearchDoctorDto) {
     const schema = yup.object().shape({
-      name: yup.string(),
+      name: yup.string().max(120),
       crm: yup.number(),
       telephone: yup.number(),
       celphone: yup.number(),
