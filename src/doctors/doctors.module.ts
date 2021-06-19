@@ -4,7 +4,7 @@ import { DoctorsController } from './doctors.controller';
 import { Doctor } from './entities/doctor.entity';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Specialty } from 'src/specialties/entities/specialty.entity';
+import { Specialty } from '../specialties/entities/specialty.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Doctor, Specialty])],
