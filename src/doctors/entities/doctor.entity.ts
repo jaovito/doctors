@@ -8,7 +8,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { Specialty } from 'src/specialties/entities/specialty.entity';
+import { Specialty } from '../../specialties/entities/specialty.entity';
 
 @Entity('doctor')
 export class Doctor {
