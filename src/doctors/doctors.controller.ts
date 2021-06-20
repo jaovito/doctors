@@ -100,17 +100,68 @@ export class DoctorsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    const schema = yup.object().shape({
+      id: yup.string().uuid().required(),
+    });
+
+    try {
+      await schema.validate({ id });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.doctorsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateDoctorDto: UpdateDoctorDto,
+  ) {
+    const schema = yup.object().shape({
+      id: yup.string().uuid().required(),
+    });
+
+    try {
+      await schema.validate({ id });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.doctorsService.update(id, updateDoctorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
+    const schema = yup.object().shape({
+      id: yup.string().uuid().required(),
+    });
+
+    try {
+      await schema.validate({ id });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.doctorsService.remove(id);
   }
 }

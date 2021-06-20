@@ -10,7 +10,7 @@ export class DoctorsSpecialtiesController {
   ) {}
 
   @Post()
-  create(@Body() createDoctorsSpecialtyDto: CreateDoctorsSpecialtyDto) {
+  async create(@Body() createDoctorsSpecialtyDto: CreateDoctorsSpecialtyDto) {
     return this.doctorsSpecialtiesService.create(createDoctorsSpecialtyDto);
   }
 }

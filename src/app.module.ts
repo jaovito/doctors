@@ -19,7 +19,7 @@ import { DoctorsSpecialty } from './doctors-specialties/entities/doctors-special
       password: 'docker',
       database: 'doctors',
       entities: [Doctor, Specialty, DoctorsSpecialty],
-      synchronize: true,
+      synchronize: false,
     }),
     DoctorsSpecialtiesModule,
   ],

@@ -46,20 +46,68 @@ export class SpecialtiesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    const schema = yup.object().shape({
+      id: yup.string().uuid().required(),
+    });
+
+    try {
+      await schema.validate({ id });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.specialtiesService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateSpecialtyDto: UpdateSpecialtyDto,
   ) {
+    const schema = yup.object().shape({
+      id: yup.string().uuid().required(),
+      name: yup.string().required(),
+    });
+
+    try {
+      await schema.validate({ id, name: updateSpecialtyDto.name });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     return this.specialtiesService.update(id, updateSpecialtyDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
+    const schema = yup.object().shape({
+      id: yup.string().uuid().required(),
+    });
+
+    try {
+      await schema.validate({ id });
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          errors: err.errors,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.specialtiesService.remove(id);
   }
 }

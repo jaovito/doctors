@@ -1,14 +1,13 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { getConnection } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppModule } from '../src/app.module';
-import { SpecialtiesModule } from '../src/specialties/specialties.module';
 import { Specialty } from '../src/specialties/entities/specialty.entity';
+import { SpecialtiesModule } from '../src/specialties/specialties.module';
 import { Doctor } from '../src/doctors/entities/doctor.entity';
 import { DoctorsSpecialty } from '../src/doctors-specialties/entities/doctors-specialty.entity';
+import { Connection } from 'typeorm';
 
 describe('Specialties (e2e)', () => {
   let app: INestApplication;
@@ -17,73 +16,75 @@ describe('Specialties (e2e)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        AppModule,
         SpecialtiesModule,
         TypeOrmModule.forRoot({
           type: 'mysql',
-          name: 'test',
           host: 'localhost',
           port: 3306,
           username: 'root',
           password: 'docker',
           database: 'doctors_test',
           entities: [Doctor, Specialty, DoctorsSpecialty],
-          synchronize: true,
+          synchronize: false,
+          migrations: ['../dist/database/migrations/*.js'],
+          cli: {
+            migrationsDir: '../dist/database/migrations',
+          },
         }),
       ],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
-  });
 
-  beforeEach(async () => {
+    const connection = app.get(Connection);
+    await connection.runMigrations();
+
     const response = await request(app.getHttpServer())
       .post('/specialties')
       .send({
-        name: 'Cirurgião',
+        name: 'Cardiologista infantil',
       });
 
     defaultSpecialty = response.body;
   });
 
-  it('should be able to POST an create an specialty', () => {
-    return request(app.getHttpServer())
+  it('should be able to POST and create an specialty', async () => {
+    return await request(app.getHttpServer())
       .post('/specialties')
       .send({
-        name: 'Cirurgião 2',
+        name: 'Cirurgião Dentista',
       })
       .expect(201);
   });
 
-  it('should be able to GET all specialties', () => {
-    return request(app.getHttpServer()).get('/specialties').expect(200);
+  it('should be able to GET all specialties', async () => {
+    return await request(app.getHttpServer()).get('/specialties').expect(200);
   });
 
-  it('should be able to GET an specialty by id', () => {
-    return request(app.getHttpServer())
+  it('should be able to GET an specialty by id', async () => {
+    return await request(app.getHttpServer())
       .get(`/specialties/${defaultSpecialty.id}`)
       .expect(200);
   });
 
-  it('should be able to PATCH an specialty', () => {
-    return request(app.getHttpServer())
+  it('should be able to PATCH an doctor', async () => {
+    return await request(app.getHttpServer())
       .patch(`/specialties/${defaultSpecialty.id}`)
       .send({
-        name: 'Cirurgião UPDATED',
+        name: 'Cirurgião',
       })
       .expect(200);
   });
 
-  it('should be able to DELETE an specialty', () => {
-    return request(app.getHttpServer())
+  it('should be able to soft DELETE an doctor', async () => {
+    return await request(app.getHttpServer())
       .delete(`/specialties/${defaultSpecialty.id}`)
       .expect(200);
   });
 
   afterAll(async () => {
-    const connection = getConnection();
-    await connection.dropDatabase();
+    const connection = app.get(Connection);
     await connection.close();
     await app.close();
   });

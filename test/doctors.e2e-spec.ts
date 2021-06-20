@@ -2,33 +2,34 @@ import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 
-import { AppModule } from '../src/app.module';
 import { DoctorsModule } from '../src/doctors/doctors.module';
-import { getConnection } from 'typeorm';
+import { Connection } from 'typeorm';
 import { Doctor } from '../src/doctors/entities/doctor.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Specialty } from '../src/specialties/entities/specialty.entity';
 import { DoctorsSpecialty } from '../src/doctors-specialties/entities/doctors-specialty.entity';
 
-describe('AppController (e2e)', () => {
+describe('Doctors (e2e)', () => {
   let app: INestApplication;
   let defaultDoctor: Doctor;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        AppModule,
         DoctorsModule,
         TypeOrmModule.forRoot({
           type: 'mysql',
-          name: 'test',
           host: 'localhost',
           port: 3306,
           username: 'root',
           password: 'docker',
           database: 'doctors_test',
           entities: [Doctor, Specialty, DoctorsSpecialty],
-          synchronize: true,
+          synchronize: false,
+          migrations: ['../dist/database/migrations/*.js'],
+          cli: {
+            migrationsDir: '../dist/database/migrations',
+          },
         }),
       ],
     }).compile();
@@ -36,7 +37,7 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    const connection = getConnection();
+    const connection = app.get(Connection);
     await connection.runMigrations();
 
     const response = await request(app.getHttpServer()).post('/doctors').send({
@@ -50,7 +51,7 @@ describe('AppController (e2e)', () => {
     defaultDoctor = response.body;
   });
 
-  it('should be able to POST an create an user', async () => {
+  it('should be able to POST and create an doctor', async () => {
     return await request(app.getHttpServer())
       .post('/doctors')
       .send({
@@ -96,8 +97,7 @@ describe('AppController (e2e)', () => {
   });
 
   afterAll(async () => {
-    const connection = getConnection();
-    await connection.dropDatabase();
+    const connection = app.get(Connection);
     await connection.close();
     await app.close();
   });
