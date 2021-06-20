@@ -9,7 +9,9 @@ import {
   Query,
   HttpException,
   HttpStatus,
+  HttpService,
 } from '@nestjs/common';
+import axios from 'axios';
 import * as yup from 'yup';
 
 import { DoctorsService } from './doctors.service';
@@ -66,7 +68,14 @@ export class DoctorsController {
       );
     }
 
-    return this.doctorsService.create(createDoctorDto);
+    const response = await axios.get(
+      `http://viacep.com.br/ws/${createDoctorDto.cep}/json/`,
+    );
+
+    return {
+      doctor: await this.doctorsService.create(createDoctorDto),
+      address: response.data,
+    };
   }
 
   @Get()
