@@ -44,6 +44,7 @@ Esse projeto foi desenvolvido para um teste da empresa GCB Investimentos. Onde f
 
 
 ## Clonar e Instalar
+Para rodar este projeto você precisa ter instalado o [NodeJS](https://github.com/jaovito/doctors)
 
 ```bash
 $ git clone https://github.com/jaovito/doctors.git doctors
