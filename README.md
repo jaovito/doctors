@@ -32,6 +32,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Jest](https://jestjs.io/)
 - [SQL Editor Beekeeper Studio](https://www.beekeeperstudio.io/)
 - [Insomnia (Documentação)](https://insomnia.rest/)
+- [Axios](https://github.com/axios/axios)
 
 
 
