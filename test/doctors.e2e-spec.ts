@@ -1,13 +1,14 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Connection } from 'typeorm';
 
 import { DoctorsModule } from '../src/doctors/doctors.module';
-import { Connection } from 'typeorm';
 import { Doctor } from '../src/doctors/entities/doctor.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { Specialty } from '../src/specialties/entities/specialty.entity';
 import { DoctorsSpecialty } from '../src/doctors-specialties/entities/doctors-specialty.entity';
+import databaseTest from './databaseTest';
 
 describe('Doctors (e2e)', () => {
   let app: INestApplication;
@@ -18,12 +19,12 @@ describe('Doctors (e2e)', () => {
       imports: [
         DoctorsModule,
         TypeOrmModule.forRoot({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: 'docker',
-          database: 'doctors_test',
+          type: databaseTest.type as any,
+          host: databaseTest.host,
+          port: databaseTest.port,
+          username: databaseTest.username,
+          password: databaseTest.password,
+          database: databaseTest.database,
           entities: [Doctor, Specialty, DoctorsSpecialty],
           synchronize: false,
           migrations: ['../dist/database/migrations/*.js'],
