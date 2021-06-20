@@ -1,0 +1,323 @@
+_id: spc_a8ec3bf46c0149c38667148289c2c744
+type: ApiSpec
+parentId: wrk_5fa9894229e0432e8edbf71ba3df7a27
+modified: 1624205287813
+created: 1624197683878
+fileName: test
+contents: >
+  swagger: "2.0"
+
+  info:
+    description: "Essa é uma API feita para um teste, onde é possível realizar o cadastro de Doutores e suas especialidades."
+    version: "1.0"
+    title: "Doctors API"
+    contact:
+      email: "hiperion@mais-app.com"
+    license:
+      name: "MIT License"
+      url: "https://mit-license.org"
+  host: "localhost:3333"
+
+  tags:
+
+  - name: "doctors"
+    description: "All albout your Doutor"
+  - name: "specialties"
+    description: "Criar e gerenciar as especialidades do Doutor"
+  - name: "doctors-specialties"
+    description: "Criar relacionamentos entre Doutor e especialidade"
+  schemes:
+
+  - "https"
+
+  - "http"
+
+  paths:
+    /doctors:
+      get:
+        tags:
+          - "doctors"
+        summary: "Get all doctors on database"
+        description: ""
+        operationId: "getDoctors"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        responses:
+          '200':
+            description: "OK"
+            schema:
+              $ref: "#/definitions/Doctor"
+      post:
+        tags:
+        - "doctors"
+        summary: "Add a new doctor to the database"
+        description: ""
+        operationId: "addDoctor"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "body"
+          name: "body"
+          description: "Doctor object that needs to be added to the database"
+          required: true
+          schema:
+            $ref: "#/definitions/Doctor"
+        responses:
+          '200':
+            description: "OK"
+            schema:
+              $ref: "#/definitions/Doctor"
+          '400':
+            description: "Bad request"
+    /doctors/{id}:
+      patch:
+        tags:
+        - "doctors"
+        summary: "Update an existing doctor"
+        description: ""
+        operationId: "updateDoctor"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          type: "uuid"
+        - in: "body"
+          name: "body"
+          description: "Doctor object that needs to be added to the database"
+          required: true
+          schema:
+            $ref: "#/definitions/Doctor"
+        responses:
+          '200':
+            description: "OK"
+            schema:
+              $ref: "#/definitions/Doctor"
+          '400':
+            description: "Bad Request"
+      /doctors/{id}:
+      get:
+        tags:
+        - "doctors"
+        summary: "Find doctor by ID"
+        description: "Returns a single doctor"
+        operationId: "getDoctorById"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "doctorId"
+          in: "path"
+          description: "ID of doctor to return"
+          required: true
+          type: "uuid"
+        responses:
+          '200':
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Doctor"
+          '400':
+            description: "Bad request"
+      delete:
+        tags:
+        - "doctors"
+        summary: "Soft Delete doctor by ID"
+        description: ""
+        operationId: "deleteDoctorById"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "doctorId"
+          in: "path"
+          description: "ID of doctor to return"
+          required: true
+          type: "uuid"
+        responses:
+          '200':
+            description: "OK"
+          '400':
+            description: "Bad request"
+    /specialties:
+      get: 
+        tags:
+        - "specialties"
+        summary: "Get all soecialties"
+        operationId: "getAllSpecialties"
+        produces:
+        - "application/json"
+        responses:
+          '200':
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Specialty"
+          '400':
+            description: "Bad request"
+      post: 
+        tags:
+        - "specialties"
+        summary: "Create one soecialty"
+        operationId: "createSpecialties"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "body"
+          name: "body"
+          description: "Specialty object that needs to be added to the database"
+          required: true
+          schema:
+            example:
+             name: 'Cardiologista infantil'
+        responses:
+          '200':
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Specialty"
+          '400':
+            description: "Bad request"
+    /specialties/{id}:
+      get:
+        tags:
+        - "specialties"
+        summary: "Find a specialty by ID"
+        description: "Returns a single specialty"
+        operationId: "getSpecialtyById"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of specialty to return"
+          required: true
+          type: "uuid"
+        responses:
+          '200':
+            description: "successful operation"
+            schema:
+              $ref: "#/definitions/Specialty"
+          '400':
+            description: "Bad request"
+      patch: 
+        tags:
+        - "specialties"
+        summary: "Update an existing specialty"
+        description: ""
+        operationId: "updateSpecialty"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          type: "uuid"
+          example: "c465171d-e482-4901-aaa1-f29328b6159b"
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Specialty object that needs to update"
+          required: true
+          schema:
+            example:
+              name: "Cardiologista infantil"
+        responses:
+          '200':
+            description: "OK"
+            schema:
+              $ref: "#/definitions/Specialty"
+          '400':
+            description: "Bad Request"
+      delete:
+        tags:
+        - "specialties"
+        summary: "Delete a specialty by ID"
+        description: ""
+        operationId: "deleteSpecialty"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          type: "uuid"
+          example: "c465171d-e482-4901-aaa1-f29328b6159b"
+          required: true
+        responses:
+          '200':
+            description: "OK"
+          '400':
+            description: "Bad request"
+  definitions:
+    ApiResponse:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+        type:
+          type: "string"
+        message:
+          type: "string"
+    Doctor:
+      type: "object"
+      required:
+      - "name"
+      - "crm"
+      - "telephone"
+      - "celphone"
+      - "cep"
+      properties:
+        id:
+          type: "uuid"
+          example: "c465171d-e482-4901-aaa1-f29328b6159b"
+        name:
+          type: "string"
+          example: "John Doe Doctor"
+        crm:
+          type: "number"
+          example: 123456
+        telephone:
+          type: "number"
+          example: 1588193921
+        celphone:
+          type: "number"
+          example: 15988193921
+        cep:
+          type: "number"
+          example: 18077500
+        created_at:
+          type: "date"
+          example: 2021-06-20T15:31:54.555Z
+        updated_at:
+          type: "date"
+          example: 2021-06-20T15:31:54.555Z
+    Specialty:
+      type: "object"
+      properties:
+        id:
+          type: "uuid"
+          example: "c465171d-e482-4901-aaa1-f29328b6159b"
+        name: 
+          type: "string"
+          example: "Cardiologista infantil"
+        created_at:
+          type: "date"
+          example: 2021-06-20T15:31:54.555Z
+        updated_at:
+          type: "date"
+          example: 2021-06-20T15:31:54.555Z
+    DoctorsSpecialty:
+      type: "object"
+      properties:
+        doctorId:
+          type: "string"
+        specialtyId:
+          type: "string"
+contentType: yaml
