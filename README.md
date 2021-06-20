@@ -22,18 +22,69 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## ✨ Tecnologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-## Installation
+- [TypeScript](https://www.typescriptlang.org/)
+- [NestJS](https://nestjs.com/)
+- [TypeORM](https://typeorm.io/#/)
+- [Jest](https://jestjs.io/)
+- [SQL Editor Beekeeper Studio](https://www.beekeeperstudio.io/)
+- [Insomnia (Documentação)](https://insomnia.rest/)
+
+
+
+## 💻 Projeto
+
+O Doctors API é uma aplicação que consiste em fazer todas operações (Insert, Update, Select, Delete) de Doutores. Nele realizamos o cadastro de Doutores e suas especialidades, podendo também gerenciar suas informações, como editar ou excluí-las.
+
+Esse projeto foi desenvolvido para um teste da empresa GCB Investimentos. Onde foi utilizado o framework NestJS para desenvolver a aplicação, junto ao TypeORM.
+
+
+## Clonar e Instalar
 
 ```bash
-$ npm install
+$ git clone https://github.com/jaovito/doctors.git doctors
 ```
 
-## Running the app
+```bash
+$ cd doctors
+```
 
+```bash
+$ npm install # ou yarn install
+```
+
+## Documentação
+A documentação foi feita com o Insomnia e todos os dados estão nas pastas [.insomnia](/.insomnia) e [public](/public).
+
+## Rodando a aplicação
+Primeiro passo você deve colar os dados do arquivo **ormconfig.example.json** para um arquivo **ormconfig.json** e substituí-los pelos dados que utiliza no seu banco de dados, o meu ficou assim:
+```json
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "docker",
+  "database": "doctors",
+  "entities": ["dist/**/*.entity.js"],
+  "migrations": ["./dist/database/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "./dist/database/migrations"
+  }
+}
+```
+OBS: LEMBRE DE ALTERAR OS DADOS DO **ormconfig.json** PARA OS DADOS DO SEU BANCO DE DADOS.
+
+
+Após o ormconfig.json estar configurado, você deve rodas as migrations com o comando:
+```bash
+$ npm run typeorm migration:run # ou yarn typeorm migration:run
+```
+
+Após ter executado todas as migrations deve executar algum dos comandos abaixo:
 ```bash
 # development
 $ npm run start
@@ -45,28 +96,43 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Testes
+Antes de rodar os testes e2e deve alterar o banco de dados teste, para isso deve abrir o arquivo databaseTest.ts na pasta **test** e alterar as variáveis para os dados correspondentes do seu banco de dados de teste, no meu caso subi esse arquivo normalmente para você conseguir testar sem problemas, mas o ideal seria coloca-lo em seu .gitignore para não comprometer seus dados, mas fique tranquilo que no meu caso não influencia em nada.
+
+O meu ficou assim:
+```ts
+export default {
+  type: 'mysql',
+  host: 'localhost',
+  port: 3306,
+  username: 'root',
+  password: 'docker',
+  database: 'doctors_test',
+};
+
+```
+
+Com isso você pode rodar os testes tranquilamentes
 
 ```bash
 # unit tests
-$ npm run test
+$ npm run test # ou yarn test
 
 # e2e tests
-$ npm run test:e2e
+$ npm run test:e2e # ou yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+$ npm run test:cov # ou yarn test:cov
 ```
 
-## Support
+## Buildar a aplicação
+Para executar o Build é bem simples
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Mantenha contato
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [João Vitório](https://github.com/jaovito)
+- Linkedin - [João Vitório](https://www.linkedin.com/in/jo%C3%A3o-vit%C3%B3rio-1420a117b/)
 
 ## License
 
