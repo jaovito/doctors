@@ -96,6 +96,8 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+OBS: A APLICAÇÃO DEVERÁ RODAR NA PORTA 3333 (http://localhost:3333).
+
 
 ## Testes
 Antes de rodar os testes e2e deve alterar o banco de dados teste, para isso deve abrir o arquivo databaseTest.ts na pasta **test** e alterar as variáveis para os dados correspondentes do seu banco de dados de teste, no meu caso subi esse arquivo normalmente para você conseguir testar sem problemas, mas o ideal seria coloca-lo em seu .gitignore para não comprometer seus dados, mas fique tranquilo que no meu caso não influencia em nada.
